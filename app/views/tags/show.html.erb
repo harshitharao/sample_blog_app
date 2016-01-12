@@ -5,5 +5,23 @@
   <%= @tag.name %>
 </p>
 
+<% unless @tag.blogs.blank? %>
+    <table>
+      <thead>
+      <tr>
+        <th>Blogs:</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @tag.blogs.each do |blog| %>
+          <tr>
+            <td><%= blog.title %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>
+
 <%= link_to 'Edit', edit_tag_path(@tag) %> |
 <%= link_to 'Back', tags_path %>
