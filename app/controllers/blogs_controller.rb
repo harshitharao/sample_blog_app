@@ -15,16 +15,24 @@ class BlogsController < ApplicationController
   # GET /blogs/new
   def new
     @blog = Blog.new
+    @tags = Tag.all
   end
 
   # GET /blogs/1/edit
   def edit
+    @tags = Tag.all
   end
 
   # POST /blogs
   # POST /blogs.json
   def create
     @blog = Blog.new(blog_params)
+    if(params[:tags])
+      params[:tags].each do |k,v|
+        tag = Tag.find_by_name(k)
+        @blog.tags << tag unless @blog.tags.ids.include?(tag.id)
+      end
+    end
 
     respond_to do |format|
       if @blog.save
@@ -40,6 +48,13 @@ class BlogsController < ApplicationController
   # PATCH/PUT /blogs/1
   # PATCH/PUT /blogs/1.json
   def update
+    if(params[:tags])
+      params[:tags].each do |k,v|
+        tag = Tag.find_by_name(k)
+        @blog.tags << tag unless @blog.tags.ids.include?(tag.id)
+      end
+    end
+
     respond_to do |format|
       if @blog.update(blog_params)
         format.html { redirect_to @blog, notice: 'Blog was successfully updated.' }
@@ -62,13 +77,13 @@ class BlogsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_blog
-      @blog = Blog.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_blog
+    @blog = Blog.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def blog_params
-      params.require(:blog).permit(:title, :content)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def blog_params
+    params.require(:blog).permit(:title, :content)
+  end
 end

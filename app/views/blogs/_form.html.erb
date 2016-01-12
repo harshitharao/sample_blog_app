@@ -19,6 +19,11 @@
     <%= f.label :content %><br>
     <%= f.text_field :content %>
   </div>
+    <% @tags.each do |t| %>
+        <%= check_box_tag "tags[#{t.name}]", t.name  %>
+        <%= label_tag t.name  %>
+        <br />
+    <% end %>
   <div class="actions">
     <%= f.submit %>
   </div>
