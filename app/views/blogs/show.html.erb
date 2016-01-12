@@ -10,5 +10,23 @@
   <%= @blog.content %>
 </p>
 
+<% unless @blog.tags.blank? %>
+    <table>
+      <thead>
+      <tr>
+        <th>Tags:</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @blog.tags.each do |tag| %>
+          <tr>
+            <td><%= tag.name %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>
+
 <%= link_to 'Edit', edit_blog_path(@blog) %> |
 <%= link_to 'Back', blogs_path %>
