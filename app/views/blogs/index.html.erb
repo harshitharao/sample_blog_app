@@ -23,7 +23,7 @@
   <% end %>
   </tbody>
 </table>
-
+<% if Blog.count > 1 %>
 <h1>Listing Blog Title Words Frequencies</h1>
 
 <table>
@@ -36,6 +36,7 @@
   </thead>
 
   <tbody>
+
   <% Blog.last.fetch_title_word_frequencies.each do |k,v| %>
       <tr>
         <td><%= k %></td>
@@ -44,7 +45,7 @@
   <% end %>
   </tbody>
 </table>
-
+<% end %>
 <br>
 
 <%= link_to 'New Blog', new_blog_path %>
